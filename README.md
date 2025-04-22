@@ -1,11 +1,11 @@
-# 📅 Flask Buchungskalender – Tanzplattform Wupperbogen
+# Flask Buchungskalender – Tanzplattform Wupperbogen
 
 Dieses Projekt ist eine webbasierte Kalenderlösung, die es ermöglicht, Termine ohne Benutzerkonto zu buchen.  
 Besonders geeignet für Organisationen wie Tanzstudios, Räume oder Projekte mit öffentlichen Buchungszeiten.
 
 ---
 
-## 🚀 Funktionen
+## Funktionen
 
 - Kalenderübersicht mit Monats- und Kalenderwochenanzeige
 - Anzeige gebuchter Termine mit Name & Notiz
@@ -17,7 +17,7 @@ Besonders geeignet für Organisationen wie Tanzstudios, Räume oder Projekte mit
 
 ---
 
-## 🗂 Projektstruktur
+## Projektstruktur
 
 ```
 .
@@ -34,7 +34,7 @@ Besonders geeignet für Organisationen wie Tanzstudios, Räume oder Projekte mit
 
 ---
 
-## 🛠 Setup lokal
+## Setup lokal
 
 ```bash
 git clone https://github.com/dein-benutzer/flask-booking.git
@@ -49,7 +49,7 @@ Dann im Browser öffnen: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-## 📦 API
+## API
 
 ```http
 GET /api/termine/<datum>
@@ -69,7 +69,7 @@ Antwort:
 
 ---
 
-## ⚙️ Deployment
+## ⚙Deployment
 
 - Raspberry Pi: per `systemd` oder nginx reverse proxy
 - GitHub/Heroku: nutze `Procfile` und `.github/workflows/deploy.yml`
@@ -77,7 +77,7 @@ Antwort:
 
 ---
 
-## 🔒 Hinweise
+## Hinweise
 
 - Keine Benutzerkonten oder Zugriffsschutz
 - Daten werden im Klartext gespeichert
@@ -85,8 +85,8 @@ Antwort:
 
 ---
 
-## 🧑‍💻 Autor
+## Autor
 
-Projektidee & Umsetzung: [Dein Name oder Organisation]
+Projektidee & Umsetzung: Team Tanzplatform des Forum Wupperbogen (VE)
 
 Lizenz: MIT
