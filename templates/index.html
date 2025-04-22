@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buchungskalender Tanzplattform Wupperbogen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 1rem;
+        }
+        .calendar {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+        .calendar th, .calendar td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            min-width: 90px;
+            height: 100px;
+            text-align: center;
+            vertical-align: top;
+        }
+        .week-label {
+            font-weight: bold;
+            background-color: #eee;
+        }
+        .calendar td a {
+            display: block;
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+        }
+        .holiday {
+            background-color: #ffeaea;
+            color: #900;
+        }
+        .times {
+            font-size: 0.75em;
+        }
+        .time-booked {
+            display: block;
+            color: #c00;
+        }
+        .nav {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .nav a {
+            margin: 0 1rem;
+            font-weight: bold;
+        }
+        .qr {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        @media (max-width: 768px) {
+            .calendar th, .calendar td {
+                font-size: 0.8rem;
+                min-width: 60px;
+                height: 80px;
+                padding: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align:center;">Buchungskalender Tanzplattform Wupperbogen</h1>
+<h2 style="text-align:center;">{{ datetime(year, month, 1).strftime('%B %Y') }}</h2>
+
+<div class="nav">
+    <a href="{{ url_for('index', year=prev_year, month=prev_month) }}">&laquo; Vorheriger Monat</a>
+    <a href="{{ url_for('index', year=next_year, month=next_month) }}">Nächster Monat &raquo;</a>
+</div>
+
+<table class="calendar">
+    <tr><th>KW</th><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th><th>Sa</th><th>So</th></tr>
+    {% set wochen = {} %}
+    {% for day, datum in days %}
+        {% set kw = kalenderwochen[datum] %}
+        {% if wochen[kw] is not defined %}
+            {% set _ = wochen.update({kw: [''] * 7}) %}
+        {% endif %}
+        {% set wd = datetime.strptime(datum, '%Y-%m-%d').weekday() %}
+        {% set content %}
+            <td class="{% if datum in feiertage %}holiday{% endif %}" title="{{ feiertage.get(datum, '') }}">
+                <a href="{{ url_for('buchen', datum=datum) }}">{{ day }}</a>
+                {% if bookings[datum] %}
+                <div class="times">
+                    {% for entry in bookings[datum]|sort(attribute='time') %}
+                        <span class="time-booked" title="{{ entry.name }}: {{ entry.note }}">{{ entry.time }} (gebucht)</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </td>
+        {% endset %}
+        {% set _ = wochen[kw].__setitem__(wd, content) %}
+    {% endfor %}
+    {% for kw, tage in wochen.items() %}
+        <tr>
+            <td class="week-label">KW {{ kw }}</td>
+            {% for tag in tage %}
+                {{ tag|safe if tag else "" }}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+<div class="qr">
+    <h3>Kalender auf dem Handy öffnen</h3>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ request.url_root }}&size=160x160" alt="QR Code">
+</div>
+
+</body>
+</html>

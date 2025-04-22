@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <title>Termin buchen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .booked { color: gray; }
+        .qr {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Termin buchen für {{ datum }}</h1>
+    <form method="post">
+        <label>Name:</label>
+        <input type="text" name="name" required><br>
+
+        <label>Uhrzeit:</label>
+        <select name="time" required>
+            {% for slot in zeitslots %}
+                <option value="{{ slot }}" {% if slot in booked %}disabled class="booked"{% endif %}>
+                    {{ slot }}{% if slot in booked %} (belegt){% endif %}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        <label>Notiz:</label>
+        <textarea name="note" rows="3" cols="30"></textarea><br>
+
+        <button type="submit">Buchen</button>
+    </form>
+
+    <div class="qr">
+        <h3>Diese Buchungsseite als QR-Code</h3>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ request.url }}&size=160x160" alt="QR Code">
+    </div>
+
+    <p><a href="/">Zurück zum Kalender</a></p>
+</body>
+</html>

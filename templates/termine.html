@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+    <title>Termine am {{ datum }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Gebuchte Termine für {{ datum }}</h1>
+    {% if entries %}
+        <ul>
+        {% for entry in entries %}
+            <li><strong>{{ entry[1] }}</strong> – {{ entry[0] }}<br><em>{{ entry[2] }}</em></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Keine Termine gebucht.</p>
+    {% endif %}
+    <p><a href="/">Zurück zum Kalender</a></p>
+</body>
+</html>
