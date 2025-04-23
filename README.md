@@ -69,7 +69,7 @@ Antwort:
 
 ---
 
-## ⚙Deployment
+## Deployment
 
 - Raspberry Pi: per `systemd` oder nginx reverse proxy
 - GitHub/Heroku: nutze `Procfile` und `.github/workflows/deploy.yml`
@@ -79,7 +79,7 @@ Antwort:
 
 ## Hinweise
 
-- Keine Benutzerkonten oder Zugriffsschutz
+- Keine Benutzerkonten oder Zugriffsschutz: aber email Adresse wird benötigt zur Bestätigung der Buchung
 - Daten werden im Klartext gespeichert
 - QR-Code zeigt direkt auf Kalender oder Buchungsseite
 
