@@ -1,61 +1,60 @@
-# Flask Buchungskalender – Tanzplattform Wupperbogen
+# 🗓️ Flask Buchungskalender – Tanzplattform Wupperbogen
 
-Dieses Projekt ist eine webbasierte Kalenderlösung, die es ermöglicht, Termine ohne Benutzerkonto zu buchen.  
-Besonders geeignet für Organisationen wie Tanzstudios, Räume oder Projekte mit öffentlichen Buchungszeiten.
-
----
-
-## Funktionen
-
-- Kalenderübersicht mit Monats- und Kalenderwochenanzeige
-- Anzeige gebuchter Termine mit Name & Notiz
-- Feiertage (NRW) automatisch via API markiert
-- Buchungen ohne Anmeldung möglich
-- Buchungsformular mit QR-Code zur mobilen Nutzung
-- Responsives Layout (Desktop & Mobilgeräte)
-- REST-API für externe Abfragen (`/api/termine/<datum>`)
+Ein moderner, responsiver Buchungskalender für öffentliche Termine – ganz ohne Login.  
+Ideal für Tanzstudios, Räume oder Projekte wie die **Tanzplattform Wupperbogen**.
 
 ---
 
-## Projektstruktur
+## ✨ Funktionen
 
-```
+- 📅 Monats- & Wochenansicht
+- ✅ Buchbar ohne Benutzerkonto
+- 🧠 Feiertage (NRW) automatisch markiert
+- ✍️ Notiz & Name bei Buchung
+- 📲 QR-Code fürs Handy
+- 📱 Mobilfähig (responsive)
+- 🔌 API: `/api/termine/<datum>`
+
+---
+
+## 📁 Projektstruktur
+
+```bash
 .
-├── app.py                  # Hauptserver mit Routen & Logik
-├── templates/
+├── app.py                  # Flask-App
+├── templates/              # HTML-Seiten
 │   ├── index.html          # Monatsübersicht
-│   └── form.html           # Buchungsformular
+│   ├── form.html           # Buchung
+│   └── week.html           # Wochenansicht
 ├── static/
-│   └── style.css           # Optionales CSS
-├── bookings.db             # SQLite-Datenbank (beim Start erzeugt)
-├── requirements.txt        # Flask + requests
+│   └── style.css           # Layout
+├── requirements.txt
+├── bookings.db             # SQLite (automatisch erzeugt)
 └── README.md
 ```
 
 ---
 
-## Setup lokal
+## 🚀 Lokales Setup
 
 ```bash
-git clone https://github.com/dein-benutzer/flask-booking.git
-cd flask-booking
+git clone https://github.com/volkere/TP_WP_PBZ_BookingCode.git
+cd TP_WP_PBZ_BookingCode
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
 
-Dann im Browser öffnen: [http://localhost:5000](http://localhost:5000)
+📂 Öffne [http://localhost:5050](http://localhost:5050)
 
 ---
 
-## API
+## 🔌 API
 
 ```http
-GET /api/termine/<datum>
+GET /api/termine/2025-04-25
 ```
-
-Antwort:
 
 ```json
 [
@@ -69,24 +68,23 @@ Antwort:
 
 ---
 
-## Deployment
+## 📦 Deployment
 
-- Raspberry Pi: per `systemd` oder nginx reverse proxy
-- GitHub/Heroku: nutze `Procfile` und `.github/workflows/deploy.yml`
-- Empfohlen: `.gitignore` mit `bookings.db`, `venv/`, `__pycache__/`
-
----
-
-## Hinweise
-
-- Keine Benutzerkonten oder Zugriffsschutz: aber email Adresse wird benötigt zur Bestätigung der Buchung
-- Daten werden im Klartext gespeichert
-- QR-Code zeigt direkt auf Kalender oder Buchungsseite
+- 🧩 Raspberry Pi: systemd oder nginx reverse proxy
+- ☁️ GitHub Actions, Heroku: `.github/workflows/deploy.yml`
+- 📂 `.gitignore`: `bookings.db`, `venv/`, `__pycache__/`
 
 ---
 
-## Autor
+## 🛡️ Hinweise
 
-Projektidee & Umsetzung: Team Tanzplatform des Forum Wupperbogen (VE)
+- 📧 E-Mail erforderlich zur Bestätigung
+- 🔓 Keine Anmeldung nötig – öffentlich zugänglich
+- 📒 Buchungen im Klartext (kein Passwort-Schutz)
 
+---
+
+## 👥 Autor
+
+Team Tanzplattform des Forum Wupperbogen (VE)  
 Lizenz: MIT
