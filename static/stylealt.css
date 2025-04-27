@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 1rem;
+}
+table.calendar {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+.calendar th, .calendar td {
+    border: 1px solid #ccc;
+    text-align: center;
+    vertical-align: top;
+    padding: 4px;
+    width: 12.5%;
+}
+.calendar .week-label {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+.calendar .holiday {
+    background-color: #ffebeb;
+}
+.time-booked {
+    display: block;
+    font-size: 0.75em;
+    color: #888;
+}
+a {
+    color: #004aad;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}

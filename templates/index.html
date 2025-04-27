@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Buchungskalender Tanzplattform Wupperbogen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1 style="text-align:center;">Buchungskalender Tanzplattform Wupperbogen</h1>
+    <h2 style="text-align:center;">{{ datetime(year, month, 1).strftime('%B %Y') }}</h2>
+
+    <div class="nav" style="text-align:center; margin-bottom: 1rem;">
+        <a href="{{ url_for('index', year=prev_year, month=prev_month) }}">&laquo; Vorheriger Monat</a> |
+        <a href="{{ url_for('index', year=next_year, month=next_month) }}">Nächster Monat &raquo;</a>
+    </div>
+
+    <table class="calendar">
+        <tr><th>KW</th><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th><th>Sa</th><th>So</th></tr>
+        {% set wochen = {} %}
+        {% for day, datum in days %}
+            {% set kw = kalenderwochen[datum] %}
+            {% if wochen[kw] is not defined %}
+                {% set _ = wochen.update({kw: [''] * 7}) %}
+            {% endif %}
+            {% set wd = datetime.strptime(datum, '%Y-%m-%d').weekday() %}
+            {% set content %}
+                <td class="{% if datum in feiertage %}holiday{% endif %}" title="{{ feiertage.get(datum, '') }}">
+                    <a href="{{ url_for('buchen', datum=datum) }}">{{ day }}</a>
+                    {% if bookings[datum] %}
+                        <div class="times">
+                        {% for entry in bookings[datum]|sort(attribute='time') %}
+                            <span class="time-booked" title="{{ entry.name }}: {{ entry.note }}">{{ entry.time }} (gebucht)</span>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </td>
+            {% endset %}
+            {% set _ = wochen[kw].__setitem__(wd, content) %}
+        {% endfor %}
+        {% for kw, tage in wochen.items() %}
+            <tr>
+                <td class="week-label">KW {{ kw }}</td>
+                {% for tag in tage %}
+                    {% if tag %}{{ tag|safe }}{% else %}<td></td>{% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div class="qr" style="text-align:center; margin-top:1rem;">
+        <h3>Kalender auf dem Handy öffnen</h3>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ request.url_root }}&size=160x160" alt="QR Code">
+    </div>
+</body>
+</html>
