@@ -1,31 +1,15 @@
+
 body {
-    font-family: Arial, sans-serif;
-    padding: 1rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.5;
 }
-table.calendar {
-    width: 100%;
-    max-width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-.calendar th, .calendar td {
-    border: 1px solid #ccc;
-    text-align: center;
-    vertical-align: top;
-    padding: 4px;
-    width: 12.5%;
-}
-.calendar .week-label {
-    font-weight: bold;
-    background-color: #f0f0f0;
-}
-.calendar .holiday {
-    background-color: #ffebeb;
-}
-.time-booked {
-    display: block;
-    font-size: 0.75em;
-    color: #888;
+h1, h2, h3 {
+    font-weight: 600;
+    color: #003366;
 }
 a {
     color: #004aad;
@@ -33,4 +17,83 @@ a {
 }
 a:hover {
     text-decoration: underline;
+    opacity: 0.8;
+}
+table.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-top: 1rem;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.calendar th,
+.calendar td {
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+    text-align: center;
+    vertical-align: top;
+    width: 14.28%;
+    font-size: 0.95rem;
+    background-color: #fff;
+}
+.calendar th {
+    background-color: #f7f7f7;
+    font-weight: 500;
+    color: #333;
+}
+.calendar td:hover {
+    background-color: #f0f8ff;
+}
+.calendar .week-label {
+    font-weight: bold;
+    background-color: #f0f0f0;
+    color: #333;
+}
+.calendar .holiday {
+    background-color: #ffebeb;
+    color: #900;
+}
+.time-booked {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 4px;
+}
+button, .btn {
+    background-color: #004aad;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+}
+button:hover, .btn:hover {
+    background-color: #003080;
+}
+form {
+    max-width: 500px;
+    margin: auto;
+}
+input, select, textarea {
+    width: 100%;
+    padding: 0.6rem;
+    margin: 0.4rem 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+input:focus, textarea:focus, select:focus {
+    border-color: #004aad;
+    outline: none;
+}
+@media (max-width: 768px) {
+    .calendar th,
+    .calendar td {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
 }

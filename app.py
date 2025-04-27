@@ -2,6 +2,9 @@
 
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from datetime import datetime, timedelta, date
+from apscheduler.schedulers.background import BackgroundScheduler
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from dotenv import load_dotenv
 load_dotenv()
 import sqlite3
@@ -38,6 +41,17 @@ def send_mail(to_email, subject, body):
         server.login(SMTP_USER, SMTP_PASS)
         server.send_message(msg)
 
+def send_html_mail(to_email, subject, html_body):
+    msg = MIMEMultipart('alternative')
+    msg['From'] = SMTP_USER
+    msg['To'] = to_email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(html_body, 'html'))
+
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        server.starttls()
+        server.login(SMTP_USER, SMTP_PASS)
+        server.send_message(msg)
 
 def log_booking(message):
     with open(LOG_PATH, 'a') as f:
@@ -159,6 +173,22 @@ def api_termine(datum):
     return jsonify([
         {"name": name, "time": time, "note": note} for name, time, note in entries
     ])
+
+def remind_tomorrow():
+    tomorrow = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
+    with sqlite3.connect(DB_PATH) as conn:
+        cur = conn.execute("SELECT name, email, date, time FROM bookings WHERE date = ?", (tomorrow,))
+        for name, email, datum, time in cur.fetchall():
+            html = f"<h3>Erinnerung</h3><p>Hallo {name},<br>Sie haben morgen um <strong>{time}</strong> einen Termin gebucht.<br><br>Viele Grüße,<br>Ihr Buchungsteam</p>"
+            send_html_mail(email, f"Erinnerung: Buchung am {datum} um {time}", html)
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(remind_tomorrow, 'cron', hour=6)
+    scheduler.start()
+
+
+
+
 
 if __name__ == '__main__':
     init_db()
